@@ -14,12 +14,6 @@ const order_service_1 = require("./order.service");
 const getOrderBike = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { email, product, quantity, totalPrice } = req.body;
-        if (!email || !product || !quantity || !totalPrice) {
-            return res.status(400).json({
-                message: 'Invalid request data',
-                status: false,
-            });
-        }
         const newOrder = yield (0, order_service_1.createOrder)(email, product, quantity, totalPrice);
         res.status(200).json({
             message: 'Order created successfully',

@@ -1,8 +1,8 @@
-import { NextFunction, Request, Response} from 'express';
+import { Request, Response } from 'express';
 import { BikeService } from './product.service';
 import { BikeModel } from './product.model';
 
-const createBike = async (req: Request, res: Response,next:NextFunction): Promise<void> => {
+const createBike = async (req: Request, res: Response): Promise<void> => {
   try {
     const { bike: bikeData } = req.body;
     const newBike = new BikeModel(bikeData);
@@ -16,7 +16,7 @@ const createBike = async (req: Request, res: Response,next:NextFunction): Promis
     res.status(500).json({
       message: 'Failed to retrieve bikes',
       success: false,
-     next(error),
+      error,
     });
   }
 };
@@ -55,14 +55,14 @@ const getAllBikes = async (req: Request, res: Response) => {
 
 const getSingleBike = async (req: Request, res: Response) => {
   try {
-    const { bikeID } = req.params; 
+    const { bikeID } = req.params;
     const result = await BikeService.getSingleBikeFromDB(bikeID);
     res.status(200).json({
       success: true,
       message: 'Bike retrieved successfully',
       data: result,
     });
-   } catch (error) {
+  } catch (error) {
     console.log(error);
     res.status(500).json({
       success: false,
@@ -71,7 +71,6 @@ const getSingleBike = async (req: Request, res: Response) => {
     });
   }
 };
-
 
 const updateBike = async (req: Request, res: Response) => {
   try {

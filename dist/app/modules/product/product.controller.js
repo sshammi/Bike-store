@@ -64,24 +64,17 @@ const getSingleBike = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     try {
         const { bikeID } = req.params;
         const result = yield product_service_1.BikeService.getSingleBikeFromDB(bikeID);
-        if (!result) {
-            return res.status(404).json({
-                message: 'Bike not found',
-                status: false,
-                data: {},
-            });
-        }
         res.status(200).json({
-            message: 'Bike retrieved successfully',
             success: true,
+            message: 'Bike retrieved successfully',
             data: result,
         });
     }
     catch (error) {
         console.log(error);
         res.status(500).json({
-            message: 'Failed to retrieve bike',
             success: false,
+            message: 'Failed to retrieve bike',
             error,
         });
     }
@@ -91,13 +84,6 @@ const updateBike = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         const { bikeID } = req.params;
         const updatedBikeData = req.body;
         const updatedBike = yield product_service_1.BikeService.updateBike(bikeID, updatedBikeData);
-        if (!updatedBike) {
-            return res.status(404).json({
-                message: 'Bike not found',
-                status: false,
-                data: {},
-            });
-        }
         res.status(200).json({
             message: 'Bike updated successfully',
             success: true,
@@ -117,13 +103,6 @@ const DeleteBike = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     try {
         const { bikeID } = req.params;
         const deletedBike = yield product_service_1.BikeService.deleteBike(bikeID);
-        if (!deletedBike) {
-            return res.status(404).json({
-                message: 'Bike not found',
-                status: false,
-                data: {},
-            });
-        }
         res.status(200).json({
             message: 'Bike deleted successfully',
             status: true,
