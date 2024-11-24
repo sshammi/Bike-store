@@ -1,3 +1,8 @@
+# Build output directory
 dist
+
+# Node.js modules
 node_modules
+
+# Environment variables file
 .env
