@@ -1,8 +1,8 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response} from 'express';
 import { BikeService } from './product.service';
 import { BikeModel } from './product.model';
 
-const createBike = async (req: Request, res: Response) => {
+const createBike = async (req: Request, res: Response,next:NextFunction): Promise<void> => {
   try {
     const { bike: bikeData } = req.body;
     const newBike = new BikeModel(bikeData);
@@ -16,7 +16,7 @@ const createBike = async (req: Request, res: Response) => {
     res.status(500).json({
       message: 'Failed to retrieve bikes',
       success: false,
-      error,
+     next(error),
     });
   }
 };
@@ -55,42 +55,29 @@ const getAllBikes = async (req: Request, res: Response) => {
 
 const getSingleBike = async (req: Request, res: Response) => {
   try {
-    const { bikeID } = req.params;
+    const { bikeID } = req.params; 
     const result = await BikeService.getSingleBikeFromDB(bikeID);
-    if (!result) {
-      return res.status(404).json({
-        message: 'Bike not found',
-        status: false,
-        data: {},
-      });
-    }
     res.status(200).json({
-      message: 'Bike retrieved successfully',
       success: true,
+      message: 'Bike retrieved successfully',
       data: result,
     });
-  } catch (error) {
+   } catch (error) {
     console.log(error);
     res.status(500).json({
-      message: 'Failed to retrieve bike',
       success: false,
+      message: 'Failed to retrieve bike',
       error,
     });
   }
 };
+
 
 const updateBike = async (req: Request, res: Response) => {
   try {
     const { bikeID } = req.params;
     const updatedBikeData = req.body;
     const updatedBike = await BikeService.updateBike(bikeID, updatedBikeData);
-    if (!updatedBike) {
-      return res.status(404).json({
-        message: 'Bike not found',
-        status: false,
-        data: {},
-      });
-    }
     res.status(200).json({
       message: 'Bike updated successfully',
       success: true,
@@ -110,13 +97,6 @@ const DeleteBike = async (req: Request, res: Response) => {
   try {
     const { bikeID } = req.params;
     const deletedBike = await BikeService.deleteBike(bikeID);
-    if (!deletedBike) {
-      return res.status(404).json({
-        message: 'Bike not found',
-        status: false,
-        data: {},
-      });
-    }
     res.status(200).json({
       message: 'Bike deleted successfully',
       status: true,

@@ -4,14 +4,7 @@ import { createOrder, calculateTotalRevenue } from './order.service';
 const getOrderBike = async (req: Request, res: Response) => {
   try {
     const { email, product, quantity, totalPrice } = req.body;
-    if (!email || !product || !quantity || !totalPrice) {
-      return res.status(400).json({
-        message: 'Invalid request data',
-        status: false,
-      });
-    }
     const newOrder = await createOrder(email, product, quantity, totalPrice);
-
     res.status(200).json({
       message: 'Order created successfully',
       status: true,
