@@ -12,6 +12,8 @@ export default [
   {
     ignores: ['node_modules', 'dist'],
     rules: {
+      'no-undef': 'off',
+      '@typescript-eslint/no-require-imports': 'off',
       '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/no-unused-vars': [
         'warn',
