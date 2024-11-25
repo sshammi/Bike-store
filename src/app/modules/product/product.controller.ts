@@ -14,7 +14,7 @@ const createBike = async (req: Request, res: Response): Promise<void> => {
     });
   } catch (error: any) {
     res.status(500).json({
-      message: 'Failed to retrieve bikes',
+      message: 'Failed to create bikes',
       success: false,
       error,
     });
